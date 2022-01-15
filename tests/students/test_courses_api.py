@@ -151,6 +151,7 @@ def test_drop_course(client, students_factory, courses_factory):
     # Arrange
 
     # from django.urls import reverse
+    # from rest_framework.reverse import reverse
     # url = reverse("courses")
     url = '/api/v1/courses/'
     courses = courses_factory(_quantity=1)
