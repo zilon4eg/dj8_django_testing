@@ -2,8 +2,13 @@ import pytest
 from rest_framework.test import APIClient
 from model_bakery import baker
 from students.models import Course, Student
+from rest_framework.reverse import reverse
 from random import randint
 import json
+
+
+# url = '/api/v1/courses/'
+url = reverse("courses-list")
 
 
 @pytest.fixture
@@ -29,7 +34,6 @@ def courses_factory():
 def test_get_course(client, students_factory, courses_factory):
     # Arrange
 
-    url = '/api/v1/courses/'
     courses = courses_factory(_quantity=20)
 
     # Act
@@ -46,7 +50,6 @@ def test_get_course(client, students_factory, courses_factory):
 def test_get_course_list(client, students_factory, courses_factory):
     # Arrange
 
-    url = '/api/v1/courses/'
     courses = courses_factory(_quantity=20)
 
     # Act
@@ -65,7 +68,6 @@ def test_get_course_filter_id(client, students_factory, courses_factory):
 
     # Arrange
 
-    url = '/api/v1/courses/'
     id_count = len(Course.objects.all())
     course_for_test = Course.objects.create(id=id_count + 1, name='name_for_test1')
     courses = courses_factory(_quantity=19)
@@ -87,7 +89,6 @@ def test_get_course_filter_name(client, students_factory, courses_factory):
 
     # Arrange
 
-    url = '/api/v1/courses/'
     course_for_test = Course.objects.create(name='name_for_test2')
     courses = courses_factory(_quantity=19)
 
@@ -106,8 +107,6 @@ def test_get_course_filter_name(client, students_factory, courses_factory):
 def test_create_course(client, students_factory, courses_factory):
 
     # Arrange
-
-    url = '/api/v1/courses/'
 
     data = {
         'name': 'name_for_test3'
@@ -128,7 +127,6 @@ def test_update_course(client, students_factory, courses_factory):
 
     # Arrange
 
-    url = '/api/v1/courses/'
     courses = courses_factory(_quantity=1)
 
     data = {
@@ -150,10 +148,6 @@ def test_drop_course(client, students_factory, courses_factory):
 
     # Arrange
 
-    # from django.urls import reverse
-    # from rest_framework.reverse import reverse
-    # url = reverse("courses")
-    url = '/api/v1/courses/'
     courses = courses_factory(_quantity=1)
 
     # Act
